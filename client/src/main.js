@@ -148,15 +148,16 @@ class ChatApp {
         return;
       }
 
-      // Store token and user
-      this.token = data.token;
-      this.user = data.user;
-      localStorage.setItem(TOKEN_KEY, this.token);
-      localStorage.setItem(USER_KEY, JSON.stringify(this.user));
-
-      errorEl.textContent = '';
+      // Show success message and switch to login
+      errorEl.textContent = 'Registration successful! Please login.';
+      errorEl.style.color = 'green';
       document.getElementById('registerForm').reset();
-      this.showRoomSelection();
+      
+      // Switch to login form after 1.5 seconds
+      setTimeout(() => {
+        document.getElementById('showLoginBtn').click();
+        document.getElementById('loginError').textContent = '';
+      }, 1500);
     } catch (err) {
       console.error('Register error:', err);
       errorEl.textContent = 'Registration failed: ' + err.message;
