@@ -40,9 +40,31 @@ class ChatApp {
     document.getElementById('roomSelectionScreen').style.display = 'none';
     document.getElementById('chatScreen').style.display = 'none';
 
-    const authForm = document.getElementById('authForm');
-    authForm.removeEventListener('submit', (e) => this.handleLogin(e));
-    authForm.addEventListener('submit', (e) => this.handleLogin(e));
+    // Setup tab toggles
+    const showLoginBtn = document.getElementById('showLoginBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+    showLoginBtn.onclick = () => {
+      showLoginBtn.classList.add('active');
+      showRegisterBtn.classList.remove('active');
+      loginForm.style.display = 'block';
+      registerForm.style.display = 'none';
+    };
+    showRegisterBtn.onclick = () => {
+      showRegisterBtn.classList.add('active');
+      showLoginBtn.classList.remove('active');
+      registerForm.style.display = 'block';
+      loginForm.style.display = 'none';
+    };
+
+    // Attach handlers
+    loginForm.removeEventListener('submit', (e) => this.handleLogin(e));
+    loginForm.addEventListener('submit', (e) => this.handleLogin(e));
+
+    registerForm.removeEventListener('submit', (e) => this.handleRegister(e));
+    registerForm.addEventListener('submit', (e) => this.handleRegister(e));
   }
 
   async handleLogin(e) {
@@ -69,26 +91,16 @@ class ChatApp {
     try {
       errorEl.textContent = 'Logging in...';
       
-      // Try login first
-      let response = await fetch(`${API_URL}/auth/login`, {
+      // Call login endpoint
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
       });
 
-      // If login fails, try registration
-      if (response.status === 401) {
-        response = await fetch(`${API_URL}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
-        });
-      }
-
       const data = await response.json();
-
       if (!response.ok) {
-        errorEl.textContent = data.error || 'Authentication failed';
+        errorEl.textContent = data.error || 'Login failed';
         return;
       }
 
@@ -99,12 +111,55 @@ class ChatApp {
       localStorage.setItem(USER_KEY, JSON.stringify(this.user));
 
       errorEl.textContent = '';
-      document.getElementById('authForm').reset();
-      
+      document.getElementById('loginForm').reset();
       this.showRoomSelection();
     } catch (error) {
       console.error('Auth error:', error);
       errorEl.textContent = 'Authentication failed: ' + error.message;
+    }
+  }
+
+  // ===== Register =====
+  async handleRegister(e) {
+    e.preventDefault();
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const password2 = document.getElementById('regPassword2').value.trim();
+    const errorEl = document.getElementById('regError');
+
+    if (!username || !password || !password2) {
+      errorEl.textContent = 'All fields are required';
+      return;
+    }
+    if (password !== password2) {
+      errorEl.textContent = 'Passwords do not match';
+      return;
+    }
+    try {
+      errorEl.textContent = 'Registering...';
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        errorEl.textContent = data.error || 'Registration failed';
+        return;
+      }
+
+      // Store token and user
+      this.token = data.token;
+      this.user = data.user;
+      localStorage.setItem(TOKEN_KEY, this.token);
+      localStorage.setItem(USER_KEY, JSON.stringify(this.user));
+
+      errorEl.textContent = '';
+      document.getElementById('registerForm').reset();
+      this.showRoomSelection();
+    } catch (err) {
+      console.error('Register error:', err);
+      errorEl.textContent = 'Registration failed: ' + err.message;
     }
   }
 

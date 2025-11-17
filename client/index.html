@@ -11,18 +11,40 @@
   <div id="authScreen" class="auth-container">
     <div class="auth-card">
       <h1>Chat App</h1>
-      <form id="authForm">
+      <div class="auth-tabs">
+        <button id="showLoginBtn" class="btn-tab active">Login</button>
+        <button id="showRegisterBtn" class="btn-tab">Register</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
         <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Enter your username" required minlength="3" maxlength="20">
+          <label for="loginUsername">Username</label>
+          <input type="text" id="loginUsername" placeholder="Enter your username" required minlength="3" maxlength="20">
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" required minlength="4">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required minlength="4">
         </div>
         <button type="submit" class="btn-primary">Login</button>
+        <p id="loginError" class="error-message"></p>
       </form>
-      <p id="authError" class="error-message"></p>
+
+      <form id="registerForm" class="auth-form" style="display:none;">
+        <div class="form-group">
+          <label for="regUsername">Username</label>
+          <input type="text" id="regUsername" placeholder="Choose a username" required minlength="3" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label for="regPassword">Password</label>
+          <input type="password" id="regPassword" placeholder="Choose a password" required minlength="4">
+        </div>
+        <div class="form-group">
+          <label for="regPassword2">Confirm Password</label>
+          <input type="password" id="regPassword2" placeholder="Confirm password" required minlength="4">
+        </div>
+        <button type="submit" class="btn-primary">Register</button>
+        <p id="regError" class="error-message"></p>
+      </form>
     </div>
   </div>
 

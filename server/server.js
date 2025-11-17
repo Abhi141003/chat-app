@@ -18,13 +18,31 @@ const app = express();
 const httpServer = createServer(app);
 const io = new SocketIOServer(httpServer, {
   cors: {
-    origin: ['https://chat-app-theta-eight-58.vercel.app/'],
+    origin: [
+      'https://chat-app-theta-eight-58.vercel.app'
+    ],
     methods: ['GET', 'POST']
   }
 });
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  'https://chat-app-backend-sable-five.vercel.app',
+  'https://chat-app-theta-eight-58.vercel.app'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // allow requests with no origin (like mobile apps or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    }
+    return callback(new Error('Origin not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+}));
 app.use(express.json());
 
 // JWT Configuration
