@@ -2,7 +2,7 @@ import { io } from 'socket.io-client';
 import './style.css';
 
 // Server URL (production)
-const SOCKET_SERVER_URL = 'https://chat-app-backend-sable-five.vercel.app';
+const SOCKET_SERVER_URL = 'https://chat-app-hw38.onrender.com';
 const API_URL = SOCKET_SERVER_URL + '/api';
 
 // Storage keys
