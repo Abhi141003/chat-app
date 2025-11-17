@@ -69,9 +69,9 @@ class ChatApp {
 
   async handleLogin(e) {
     e.preventDefault();
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const errorEl = document.getElementById('authError');
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    const errorEl = document.getElementById('loginError');
 
     if (!username || !password) {
       errorEl.textContent = 'Username and password are required';
