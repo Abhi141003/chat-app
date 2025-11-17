@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <!-- Auth Screen -->
+  <div id="authScreen" class="auth-container">
+    <div class="auth-card">
+      <h1>Chat App</h1>
+      <form id="authForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username" required minlength="3" maxlength="20">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required minlength="4">
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+      <p id="authError" class="error-message"></p>
+    </div>
+  </div>
+
+  <!-- Room Selection Screen -->
+  <div id="roomSelectionScreen" class="room-selection-container" style="display: none;">
+    <div class="room-selection-card">
+      <div class="room-selection-header">
+        <h2>Select a Chat Room</h2>
+        <p>Welcome, <span id="selectedUsername"></span>!</p>
+      </div>
+      <div id="roomSelectionList" class="room-selection-list"></div>
+      <button id="logoutBtn" class="btn-secondary">Logout</button>
+    </div>
+  </div>
+
+  <!-- Chat Screen -->
+  <div id="chatScreen" class="chat-container" style="display: none;">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="px-4 py-4 border-b border-gray-700">
+        <h1 class="text-xl font-bold">Chat Rooms</h1>
+        <p class="text-sm text-gray-400 mt-1">Logged in as: <span id="loggedInUsername"></span></p>
+      </div>
+      <div class="room-list" id="roomList"></div>
+      <div class="user-list" id="userList"></div>
+      <button id="logoutChatBtn" class="w-full mt-auto px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold transition">
+        Logout
+      </button>
+    </div>
+
+    <!-- Main Chat Area -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="bg-white border-b border-gray-200 px-4 py-4">
+        <h2 class="text-lg font-bold text-gray-900" id="roomName">Select a room</h2>
+      </div>
+
+      <!-- Messages -->
+      <div class="messages-area" id="messagesContainer"></div>
+
+      <!-- Input Area -->
+      <div class="input-area">
+        <div class="flex gap-2">
+          <textarea
+            id="messageInput"
+            placeholder="Type a message..."
+            class="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+            rows="2"
+          ></textarea>
+          <button
+            id="sendBtn"
+            class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition font-semibold"
+          >
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
