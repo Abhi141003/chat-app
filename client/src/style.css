@@ -26,6 +26,23 @@ body {
   @apply text-3xl font-bold text-gray-900 mb-6 text-center;
 }
 
+/* Auth Tabs */
+.auth-tabs {
+  @apply flex gap-2 mb-6 border-b border-gray-200;
+}
+
+.btn-tab {
+  @apply px-4 py-2 text-sm font-semibold text-gray-600 bg-white border-b-2 border-transparent hover:text-gray-900 transition;
+}
+
+.btn-tab.active {
+  @apply text-blue-600 border-blue-600;
+}
+
+.auth-form {
+  @apply w-full;
+}
+
 .form-group {
   @apply mb-4;
 }
