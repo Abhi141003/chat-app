@@ -1,10 +1,8 @@
 import { io } from 'socket.io-client';
 import './style.css';
 
-// Auto-detect server URL based on current host
-const SOCKET_SERVER_URL = window.location.hostname === 'localhost' 
-  ? 'http://localhost:3001' 
-  : window.location.origin;
+// Server URL (production)
+const SOCKET_SERVER_URL = 'https://chat-app-backend-sable-five.vercel.app';
 const API_URL = SOCKET_SERVER_URL + '/api';
 
 // Storage keys
